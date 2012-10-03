@@ -90,7 +90,7 @@ LRESULT WinManager::MyProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		RemoveProp(hWnd, PROP_WINPROC);
 		me->Release();
 		PostQuitMessage(0);
-		break;
+		return S_OK;
     }
 	if(me)
 		return me->AppProc(msg, wParam, lParam);

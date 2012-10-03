@@ -1,0 +1,37 @@
+﻿2012/10/03 19:11:52 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "D:\Github\Game_Tests\R_W\R_W\R_W.vcxproj" (build ターゲット)。
+     1>InitializeBuildStatus:
+         "AlwaysCreate" が指定されたため "Debug\R_W.unsuccessfulbuild" を作成しています。
+       ClCompile:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Program Files\Microsoft DirectX SDK (June 2010)\\Include" /ZI /nologo /W3 /WX- /MP /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt C2DSprite.cpp CDirectXDevice.cpp CMainWindow.cpp main.cpp /MP 
+     1>cl : コマンド ライン warning D9030: '/Gm' はマルチプロセシングと互換性がありません。/MP スイッチを無視します
+         main.cpp
+         コードを生成中...
+         コンパイル中...
+         CMainWindow.cpp
+         CDirectXDevice.cpp
+         C2DSprite.cpp
+         コードを生成中...
+       ManifestResourceCompile:
+         すべての出力が最新のものです。
+       Link:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Github\Game_Tests\R_W\Debug\R_W.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files\Microsoft DirectX SDK (June 2010)\\Lib\x86" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\R_W.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Github\Game_Tests\R_W\Debug\R_W.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Github\Game_Tests\R_W\Debug\R_W.lib" /MACHINE:X86 Debug\R_W.exe.embed.manifest.res
+         Debug\C2DSprite.obj
+         Debug\CDirectXDevice.obj
+         Debug\CMainWindow.obj
+         Debug\main.obj
+         Debug\WindowManager.obj
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\R_W.exe.embed.manifest" /manifest Debug\R_W.exe.intermediate.manifest
+         すべての出力が最新のものです。
+       LinkEmbedManifest:
+         すべての出力が最新のものです。
+         R_W.vcxproj -> D:\Github\Game_Tests\R_W\Debug\R_W.exe
+       FinalizeBuildStatus:
+         ファイル "Debug\R_W.unsuccessfulbuild" を削除しています。
+         "Debug\R_W.lastbuildstate" のタッチ タスクを実行しています。
+     1>プロジェクト "D:\Github\Game_Tests\R_W\R_W\R_W.vcxproj" (build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:11.19

@@ -5,7 +5,8 @@
 
 #include "C2DSprite.h"
 C2DSprite sprite;
-
+float Xvec = 1.0f;
+float Yvec = 1.0f;
 float rad = 0.0f;
 
 LRESULT CMainWindow::AppProc(UINT msg, WPARAM wParam, LPARAM lParam)
@@ -20,7 +21,10 @@ LRESULT CMainWindow::AppProc(UINT msg, WPARAM wParam, LPARAM lParam)
 HRESULT CMainWindow::MsgLoop()
 {
     sprite.setScreenSize(this->GetWindowcWidth(),this->GetWindowcHeight());
-    sprite.setPos(this->GetWindowcWidth()/2,this->GetWindowcHeight()/2);
+    sprite.setPivot(64.0f,64.0f);
+    tComPtr<IDirect3DTexture9> tex;
+    D3DXCreateTextureFromFile(CDirectXDevice::GetDxDevice().GetDevice(),L"Data\\no_picture.jpg",tex.GetPPtr());
+    sprite.setTexture(tex,false);
 	while(1)
 	{
 		if(PeekMessage(&m_msg,NULL,0,0,PM_REMOVE))
@@ -40,6 +44,18 @@ HRESULT CMainWindow::MsgLoop()
 
 VOID CMainWindow::AppLoop()
 {
+    float px,py;
+    sprite.getPos(&px,&py);
+    if(px+1.0f > this->GetWindowcWidth()-128.0f)
+        Xvec = -1.0f;
+    else if(px-1.0f < 0.0f)
+        Xvec = 1.0f;
+    if(py+3.0f > this->GetWindowcHeight()-128.0f)
+        Yvec = -1.0f;
+    else if(py-3.0f <0.0f)
+        Yvec = 1.0f;
+
+    sprite.setPos(px+1.0f*Xvec,py+3.0f*Yvec);
      sprite.setAlpha(1.0f);
      sprite.setRotate(rad);
      sprite.draw();
