@@ -1,0 +1,72 @@
+fixme:WM_KEYDOWN
+	mapと関数ポインタを使って対応。
+	追加は出来るようになったけど、上書きはどうするかなぁ…
+	削除も必要?
+	関数オブジェクトを使って何とかできるようにする
+	ex)int foo::bar(wparam,lparam)とint foobar(wparam,lparam)を等価に
+	boost::functionスゲーって思った
+	関数オブジェクトを使えば何とかなる気がする
+	ex)function(hwnd,lparam)
+	とfunction(classA,hwnd,lparam)でbindすれば?
+
+
+FIXME:フルスクリーンとwindowモードの切り替え
+	出来た…事にする
+	DirectXへの対応
+TODO:DirectX
+	過去の資産を使いまわしたいけど…
+	とりあえずデバイス初期化だけは
+TODO:AppLoop
+関数ポインタをVectorにでも突っ込んでそいつで回せるならいいんだけど
+正直微妙すぎて
+
+TODO:
+	DLLのロードとか
+	やれるなら便利そう。パーサDLLとかスクリプタDLLとか?
+
+どうでもいいけど名前変える?
+   Project R.Wings -> Project B.B.
+           何か被ってる?   Bullet Butterfly
+
+TODO:
+  描画システム考える。
+  リスト的な何かとかそんなん
+//イニシャライザで頂点バッファ確保？
+	ex)
+	class CDrawList
+	{
+	public:
+	CDrawList(int _num):m_VertexNum(_num){}
+//描画リスト的何かは必要だと思うんだけども、どーなんじゃ？	~CDrawList(){}
+//んー…わかんね	protected:
+//たとえば…	const int m_VertexNum;
+//たぶんステージ描画は描画リスト化した方がいいと思われる	std::vector<tagMyVertex> m_drawlist;
+//マップチップ的なのを保持しつつ、実際は～みたいな	IDIRECT3D9VertexBuffer* m_pVB;
+//固定画面だから頂点と言うかチップ数は固定だし	};
+//たぶん自機は別じゃないかなぁ
+//問題は弾幕とか敵とかの不定多数だよなぁ	テンプレートにするか派生させるか
+// ↑固定数のバッファを用意してループで回す
+// 例えばのテンプレートクラスのようなもの
+// template<class T> class DrawList
+//{
+//protected:
+//std::list<T> m_drawDatalist;
+//const int    MAXSIZE;
+//m_pVB
+//}
+//
+//
+//};
+// Zによる描画リスト?
+//
+//
+//
+//
+
+0927
+マルペケつくろーどっとコムのスプライトクラスを
+ベースにする。車輪の再発明は…
+何より3Dは考えないほうが心にやさしい。
+再利用(?)の観点から、TRIANGLE_STRIPを使う?LISTの明示的なメリットが
+思いつかんけど、多分複雑な図形を書くならソッチのほうが便利なんだろう。
+どうせ四角しか書かないだろうから
