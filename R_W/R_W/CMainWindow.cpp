@@ -1,7 +1,17 @@
 #include "CMainWindow.h"
+#include "CDirectXDevice.h"
 #include <stdio.h>
+#include <d3dx9.h>
+
+#include "C2DSprite.h"
 #include <stdlib.h>
 #include <math.h>
+
+C2DSprite sprite[100];
+float Xvec = 1.0f;
+float Yvec = 1.0f;
+float vect[100];
+float deg[100]; 
 
 
 LRESULT CMainWindow::AppProc(UINT msg, WPARAM wParam, LPARAM lParam)
@@ -15,6 +25,20 @@ LRESULT CMainWindow::AppProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 HRESULT CMainWindow::MsgLoop()
 {
+	
+    tComPtr<IDirect3DTexture9> tex;
+	srand(201);
+    D3DXCreateTextureFromFile(CDirectXDevice::GetDxDevice().GetDevice(),L"Data\\no_picture.jpg",tex.GetPPtr());
+	for(int i=0;i<100;++i)
+	{
+		sprite[i].setScreenSize(this->GetWindowcWidth(),this->GetWindowcHeight());
+	    sprite[i].setPivot(64.0f,64.0f);
+		sprite[i].setTexture(tex,false);
+		deg[i] = rand() % 360;
+		vect[i] = rand() % 2 + 1.0f;
+		sprite[i].setPos(this->GetWindowcWidth()/2-64.0f,this->GetWindowcHeight()/2-64.0f);
+
+	}
 	while(1)
 	{
 		if(PeekMessage(&m_msg,NULL,0,0,PM_REMOVE))
@@ -34,10 +58,33 @@ HRESULT CMainWindow::MsgLoop()
 
 VOID CMainWindow::AppLoop()
 {
+	for(int i=0;i<100;++i)
+    {
+		float px,py;
+	    sprite[i].getPos(&px,&py);
+		if(px+vect[i]*cos(deg[i]) > this->GetWindowcWidth()-128.0f)
+		 Xvec = -1.0f;
+		else if(px-vect[i]*cos(deg[i]) < 0.000f)
+			Xvec = 1.0f;
+		if(py+vect[i]*sin(deg[i]) > this->GetWindowcHeight()-128.0f)
+			Yvec = -1.0f;
+		else if(py-vect[i]*sin(deg[i]) <0.000f)
+			Yvec = 1.0f;
+
+    sprite[i].setPos(px+cos(deg[i])*1.0f*Xvec,py+3.0f*sin(deg[i])*Yvec);
+     sprite[i].setAlpha(1.0f);
+     sprite[i].setRotate(deg[i]);
+     sprite[i].draw();
+	}
+    CDirectXDevice::GetDxDevice().Begin();
+    C2DSprite::drawAll(CDirectXDevice::GetDxDevice().GetDevice());
+    C2DSprite::clearDrawList();
+    CDirectXDevice::GetDxDevice().End();
 }
 
 HRESULT CMainWindow::Release()
 {
+    C2DSprite::end_last();
 	return S_OK;
 }
 

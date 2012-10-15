@@ -36,25 +36,18 @@ VS_OUT vs_main( VS_IN In ) {
 }
 
 
-// 中心を赤く
-float4 ps_center_red(VS_OUT In) : COLOR0 {
-    float4 color = tex2D( smp, In.uv );
-    color.a *= alpha;
-	if(In.uv.x > 0.45 && In.uv.x < 0.55)
-		if(In.uv.y > 0.45 && In.uv.y < 0.55)  
-	 color = float4(1.0,0,0,1.0);
-    return color;
-}
+// ピクセルシェーダ
 float4 ps_main(VS_OUT In) : COLOR0 {
     float4 color = tex2D( smp, In.uv );
     color.a *= alpha;
     return color;
 }
 
+
 technique Tech {
     pass p0 {
-        VertexShader = compile vs_3_0 vs_main();
-        PixelShader  = compile ps_3_0 ps_main();
+        VertexShader = compile vs_2_0 vs_main();
+        PixelShader  = compile ps_2_0 ps_main();
         
         AlphaBlendEnable = true;
         SrcBlend = SRCALPHA;
