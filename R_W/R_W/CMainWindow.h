@@ -2,8 +2,9 @@
 #define ___CMAINWINDOW_2011_11_26___
 #include "WindowManager.h"
 ///メインウィンドウなのでシングルトン
+#include <list>
 
-
+typedef void (func)(void*);
 class CMainWindow : public WinManager
 {
 public:
