@@ -49,6 +49,7 @@ public:
 
     // ピボット指定
     void setPivot( float x, float y );
+    void setPivotCenter();
     void getPivot( float *x, float *y );
 
     // 姿勢指定

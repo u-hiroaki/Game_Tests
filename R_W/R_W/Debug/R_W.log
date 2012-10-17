@@ -1,3 +1,22 @@
-﻿  CMainWindow.cpp
-c:\users\hiroaki\documents\github\game_tests\r_w\r_w\cmainwindow.cpp(37): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-  R_W.vcxproj -> C:\Users\Hiroaki\Documents\GitHub\Game_Tests\R_W\Debug\R_W.exe
+﻿2012/10/17 21:13:34 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "D:\Github\Game_Tests\R_W\R_W\R_W.vcxproj" (build ターゲット)。
+     1>InitializeBuildStatus:
+         "AlwaysCreate" が指定されたため "Debug\R_W.unsuccessfulbuild" を作成しています。
+       ClCompile:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Program Files\Microsoft DirectX SDK (June 2010)\\Include" /ZI /nologo /W3 /WX- /MP /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt CMainWindow.cpp /MP 
+         CMainWindow.cpp
+     1>d:\github\game_tests\r_w\r_w\cmainwindow.cpp(28): error C2065: 'sprite' : 定義されていない識別子です。
+     1>d:\github\game_tests\r_w\r_w\cmainwindow.cpp(28): error C2228: '.setScreenSize' の左側はクラス、構造体、共用体でなければなりません
+     1>d:\github\game_tests\r_w\r_w\cmainwindow.cpp(29): error C2065: 'sprite' : 定義されていない識別子です。
+     1>d:\github\game_tests\r_w\r_w\cmainwindow.cpp(29): error C2228: '.setTexture' の左側はクラス、構造体、共用体でなければなりません
+     1>d:\github\game_tests\r_w\r_w\cmainwindow.cpp(30): error C2065: 'deg' : 定義されていない識別子です。
+     1>d:\github\game_tests\r_w\r_w\cmainwindow.cpp(31): error C2065: 'vect' : 定義されていない識別子です。
+     1>d:\github\game_tests\r_w\r_w\cmainwindow.cpp(32): error C2065: 'sprite' : 定義されていない識別子です。
+     1>d:\github\game_tests\r_w\r_w\cmainwindow.cpp(32): error C2228: '.setPos' の左側はクラス、構造体、共用体でなければなりません
+     1>d:\github\game_tests\r_w\r_w\cmainwindow.cpp(33): error C2065: 'sprite' : 定義されていない識別子です。
+     1>d:\github\game_tests\r_w\r_w\cmainwindow.cpp(33): error C2228: '.setPivotCenter' の左側はクラス、構造体、共用体でなければなりません
+     1>プロジェクト "D:\Github\Game_Tests\R_W\R_W\R_W.vcxproj" (build ターゲット) のビルドが終了しました -- 失敗。
+
+ビルドに失敗しました。
+
+経過時間 00:00:04.77

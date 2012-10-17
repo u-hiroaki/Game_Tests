@@ -132,6 +132,11 @@
 		pivotX = x;
 		pivotY = y;
 	}
+    void C2DSprite::setPivotCenter()
+    {
+        this->pivotX = this->polyH/2;
+        this->pivotY= this->polyH/2;
+    }
 
 	void C2DSprite::getPivot( float *x, float *y ) {
 		*x = pivotX;
