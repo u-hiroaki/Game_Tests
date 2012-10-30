@@ -145,8 +145,8 @@
 
 	// Žp¨Žw’è
 	void C2DSprite::setPos( float x, float y ) {
-		posX = x;
-		posY = y;
+        posX = x -this->pivotX;
+		posY = y-this->pivotY;
 	}
 
 	void C2DSprite::getPos( float *x, float *y ) {

@@ -94,6 +94,7 @@
     <ClCompile Include="CDirectXDevice.cpp" />
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="CMainWindow.cpp" />
+    <ClCompile Include="CSequence.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
@@ -105,6 +106,7 @@
     <ClInclude Include="CEffect.h" />
     <ClInclude Include="CFPSCounter.h" />
     <ClInclude Include="CMainWindow.h" />
+    <ClInclude Include="CSequence.h" />
     <ClInclude Include="CState.h" />
     <ClInclude Include="DXTemplateUtility.h" />
     <ClInclude Include="TemplateUtility.h" />

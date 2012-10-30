@@ -8,10 +8,11 @@
 
 #include "C2DSprite.h"
 
-
+extern bool frame;
 void test(HWND hwnd,LPARAM lparam)
 {
     SetWindowText(hwnd,TEXT("Ç∑ÇÿÅ[Ç∑Ç´Å[Ç™Ç®Ç≥ÇÍÇΩÇ¡Ç€Ç¢"));
+    frame = true;
 }
 
 void test2(HWND hwnd,LPARAM lparam)

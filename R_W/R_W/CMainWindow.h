@@ -1,6 +1,7 @@
 #ifndef ___CMAINWINDOW_2011_11_26___
 #define ___CMAINWINDOW_2011_11_26___
 #include "WindowManager.h"
+#include "CSequence.h"
 ///メインウィンドウなのでシングルトン
 
 
@@ -22,6 +23,7 @@ private:
     ~CMainWindow(){};
 	CMainWindow(CMainWindow& obj){};
 	void operator=(CMainWindow& obj){};
+    CSequence   m_sequence;
 protected:
     void HookKey(WPARAM,LPARAM);
     void ChangeScr2Window();

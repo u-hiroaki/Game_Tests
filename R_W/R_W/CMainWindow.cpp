@@ -6,7 +6,7 @@
 #include "C2DSprite.h"
 #include <stdlib.h>
 #include <math.h>
-
+bool frame = false;
 
 LRESULT CMainWindow::AppProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -19,19 +19,7 @@ LRESULT CMainWindow::AppProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 HRESULT CMainWindow::MsgLoop()
 {
-	
-    tComPtr<IDirect3DTexture9> tex;
-	srand(201);
-    D3DXCreateTextureFromFile(CDirectXDevice::GetDxDevice().GetDevice(),L"Data\\no_picture.jpg",tex.GetPPtr());
-	for(int i=0;i<100;++i)
-	{
-		sprite[i].setScreenSize(this->GetWindowcWidth(),this->GetWindowcHeight());
-        sprite[i].setTexture(tex,true);
-		deg[i] = rand() % 360;
-		vect[i] = rand() % 2 + 1.0f;
-		sprite[i].setPos(this->GetWindowcWidth()/2-64.0f,this->GetWindowcHeight()/2-64.0f);
-        sprite[i].setPivotCenter();
-	}
+    m_sequence.Init();
 	while(1)
 	{
 		if(PeekMessage(&m_msg,NULL,0,0,PM_REMOVE))
@@ -44,18 +32,21 @@ HRESULT CMainWindow::MsgLoop()
 				DispatchMessage(&m_msg);
 			}
 		}
-        else{ this->AppLoop();Sleep(1);}
+        else{
+            this->AppLoop();Sleep(1);
+        }
 	}
 	return S_OK;
 }
 
 VOID CMainWindow::AppLoop()
 {
-
+        m_sequence.Update(frame);
     CDirectXDevice::GetDxDevice().Begin();
     C2DSprite::drawAll(CDirectXDevice::GetDxDevice().GetDevice());
     C2DSprite::clearDrawList();
     CDirectXDevice::GetDxDevice().End();
+    frame = false;
 }
 
 HRESULT CMainWindow::Release()

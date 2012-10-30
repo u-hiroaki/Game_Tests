@@ -39,15 +39,19 @@ VS_OUT vs_main( VS_IN In ) {
 // ピクセルシェーダ
 float4 ps_main(VS_OUT In) : COLOR0 {
     float4 color = tex2D( smp, In.uv );
-    color.a *= alpha;
+    
+	if(In.uv.x > 0.2 && In.uv.x < 0.8)
+	 if(In.uv.y > 0.2 && In.uv.y < 0.8)
+	color= float4(1,0,0,1);
+	color.a *= alpha;
     return color;
 }
 
 
 technique Tech {
     pass p0 {
-        VertexShader = compile vs_2_0 vs_main();
-        PixelShader  = compile ps_2_0 ps_main();
+        VertexShader = compile vs_3_0 vs_main();
+        PixelShader  = compile ps_3_0 ps_main();
         
         AlphaBlendEnable = true;
         SrcBlend = SRCALPHA;
