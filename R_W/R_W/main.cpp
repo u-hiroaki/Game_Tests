@@ -7,7 +7,7 @@
 #define _CRTDBG_MAP_ALLOC
 
 #include "C2DSprite.h"
-
+#include "CSequence.h"
 extern bool frame;
 void test(HWND hwnd,LPARAM lparam)
 {
@@ -49,6 +49,10 @@ INT WINAPI WinMain(HINSTANCE hinstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,i
     CMainWindow::GetMainWindow().SetKeyHook('R',SetClearRed);
     CMainWindow::GetMainWindow().SetKeyHook('G',SetClearGreen);
     CMainWindow::GetMainWindow().SetKeyHook('B',SetClearBlue);
+    CMainWindow::GetMainWindow().SetKeyHook(VK_UP,SetUButton);
+    CMainWindow::GetMainWindow().SetKeyHook(VK_DOWN,SetDButton);
+    CMainWindow::GetMainWindow().SetKeyHook(VK_LEFT,SetLButton);
+    CMainWindow::GetMainWindow().SetKeyHook(VK_RIGHT,SetRButton);
     CDirectXDevice::GetDxDevice().Initialize(
         CMainWindow::GetMainWindow().GetWindowHandle(),1,
         CMainWindow::GetMainWindow().GetWindowcWidth(),

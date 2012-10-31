@@ -47,6 +47,10 @@ VOID CMainWindow::AppLoop()
     C2DSprite::clearDrawList();
     CDirectXDevice::GetDxDevice().End();
     frame = false;
+    g_button.push[0]=false;
+        g_button.push[1]=false;
+            g_button.push[2]=false;
+                g_button.push[3]=false;
 }
 
 HRESULT CMainWindow::Release()
