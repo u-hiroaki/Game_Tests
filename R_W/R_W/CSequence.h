@@ -27,3 +27,4 @@ void SetUButton(HWND hwnd,LPARAM lparam);
 void SetDButton(HWND hwnd,LPARAM lparam);
 void SetLButton(HWND hwnd,LPARAM lparam);
 void SetRButton(HWND hwnd,LPARAM lparam);
+unsigned __stdcall func3(void* );

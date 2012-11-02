@@ -90,6 +90,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="C2DBuffer.cpp" />
     <ClCompile Include="C2DSprite.cpp" />
     <ClCompile Include="CDirectXDevice.cpp" />
     <ClCompile Include="CEffect.cpp" />
@@ -99,6 +100,7 @@
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C2DBuffer.h" />
     <ClInclude Include="C2DSprite.h" />
     <ClInclude Include="CD3D9Dev.h" />
     <ClInclude Include="CDebugConsole.h" />

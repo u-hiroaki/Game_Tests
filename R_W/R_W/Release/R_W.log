@@ -1,0 +1,37 @@
+﻿2012/11/02 21:06:21 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "D:\Github\Game_Tests\R_W\R_W\R_W.vcxproj" (build ターゲット)。
+     1>InitializeBuildStatus:
+         "AlwaysCreate" が指定されたため "Release\R_W.unsuccessfulbuild" を作成しています。
+       ClCompile:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Program Files\Microsoft DirectX SDK (June 2010)\Include" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt CSequence.cpp
+         CSequence.cpp
+     1>CSequence.cpp(13): warning C4244: '初期化中' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>CSequence.cpp(14): warning C4244: '初期化中' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>CSequence.cpp(41): warning C4305: '引数' : 'double' から 'float' へ切り詰めます。
+     1>CSequence.cpp(41): warning C4305: '引数' : 'double' から 'float' へ切り詰めます。
+     1>CSequence.cpp(50): warning C4305: '引数' : 'double' から 'float' へ切り詰めます。
+     1>CSequence.cpp(50): warning C4305: '引数' : 'double' から 'float' へ切り詰めます。
+     1>CSequence.cpp(15): warning C4101: 'mainu' : ローカル変数は 1 度も使われていません。
+     1>CSequence.cpp(15): warning C4101: 'mainv' : ローカル変数は 1 度も使われていません。
+       Link:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Github\Game_Tests\R_W\Release\R_W.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Program Files\Microsoft DirectX SDK (June 2010)\\Lib\x86" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\R_W.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Github\Game_Tests\R_W\Release\R_W.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Github\Game_Tests\R_W\Release\R_W.lib" /MACHINE:X86 Release\C2DBuffer.obj
+         Release\C2DSprite.obj
+         Release\CDirectXDevice.obj
+         Release\CEffect.obj
+         Release\CMainWindow.obj
+         Release\CSequence.obj
+         Release\main.obj
+         Release\WindowManager.obj
+         コード生成しています。
+         コード生成が終了しました。
+         R_W.vcxproj -> D:\Github\Game_Tests\R_W\Release\R_W.exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Github\Game_Tests\R_W\Release\R_W.exe;#1" /manifest Release\R_W.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         ファイル "Release\R_W.unsuccessfulbuild" を削除しています。
+         "Release\R_W.lastbuildstate" のタッチ タスクを実行しています。
+     1>プロジェクト "D:\Github\Game_Tests\R_W\R_W\R_W.vcxproj" (build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:04.25

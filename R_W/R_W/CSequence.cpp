@@ -2,6 +2,7 @@
 #include "CDirectXDevice.h"
 #include"CMainWindow.h"
 #include <math.h>
+#include <process.h>
 button g_button;
 float SinTable[NUMsubSP];
 float CosTable[NUMsubSP];
@@ -79,16 +80,24 @@ void CSequence::func1()
             count++;
         }
     }
-    float vec = 16.0f;
-    for(int i=0;i<NUMsubSP;++i)
+    float vec = 8.0f;
+    HANDLE thread = (HANDLE)_beginthreadex(NULL,0,func3,&subSP[NUMsubSP/2],0,NULL);
+    for(int i=0;i<NUMsubSP/2;++i)
     {
-        if(!subSP[i].getActivity())
-            break;
         float posX,posY;
         subSP[i].getPos(&posX,&posY);
         subSP[i].setPos(posX+CosTable[i]*vec,posY+vec*SinTable[i]);
+        subSP[i].getPos(&posX,&posY);
+        if(posX < 0 || posX > 800)
+            subSP[i].setActivity(false);
+        if(posY < 0 || posY > 600)
+            subSP[i].setActivity(false);
         subSP[i].draw();
     }
+    WaitForSingleObject(thread,INFINITE);
+    for(int i=NUMsubSP/2;i<NUMsubSP;++i)
+        subSP[i].draw();
+    CloseHandle(thread);
 }
 
 void CSequence::func2()
@@ -112,3 +121,22 @@ void SetUButton(HWND hwnd,LPARAM lparam){g_button.push[0] = true;};
 void SetDButton(HWND hwnd,LPARAM lparam){g_button.push[1] = true;};
 void SetLButton(HWND hwnd,LPARAM lparam){g_button.push[2] = true;};
 void SetRButton(HWND hwnd,LPARAM lparam){g_button.push[3] = true;};
+
+unsigned __stdcall func3(void* ptr)
+{
+    C2DSprite* data = (C2DSprite*)ptr;
+    float vec = 8.0f;
+    int offset = NUMsubSP/2;
+     for(int i=0;i<NUMsubSP/2;++i)
+    {
+        float posX,posY;
+        data[i].getPos(&posX,&posY);
+        data[i].setPos(posX+CosTable[i+offset]*vec,posY+vec*SinTable[i+offset]);
+        data[i].getPos(&posX,&posY);
+        if(posX < 0 || posX > 800)
+            data[i].setActivity(false);
+        if(posY < 0 || posY > 600)
+            data[i].setActivity(false);
+    }
+     return 0;
+}
