@@ -84,15 +84,18 @@ void CSequence::func1()
     HANDLE thread = (HANDLE)_beginthreadex(NULL,0,func3,&subSP[NUMsubSP/2],0,NULL);
     for(int i=0;i<NUMsubSP/2;++i)
     {
+        if(!subSP[i].getActivity())
+            continue;
         float posX,posY;
         subSP[i].getPos(&posX,&posY);
         subSP[i].setPos(posX+CosTable[i]*vec,posY+vec*SinTable[i]);
         subSP[i].getPos(&posX,&posY);
+        subSP[i].draw();
         if(posX < 0 || posX > 800)
             subSP[i].setActivity(false);
         if(posY < 0 || posY > 600)
             subSP[i].setActivity(false);
-        subSP[i].draw();
+
     }
     WaitForSingleObject(thread,INFINITE);
     for(int i=NUMsubSP/2;i<NUMsubSP;++i)
@@ -129,6 +132,8 @@ unsigned __stdcall func3(void* ptr)
     int offset = NUMsubSP/2;
      for(int i=0;i<NUMsubSP/2;++i)
     {
+        if(!data[i].getActivity())
+            continue;
         float posX,posY;
         data[i].getPos(&posX,&posY);
         data[i].setPos(posX+CosTable[i+offset]*vec,posY+vec*SinTable[i+offset]);

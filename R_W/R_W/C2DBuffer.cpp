@@ -256,14 +256,22 @@
 			world = world * scale * rot;
 			world._41 += sp->posX + sp->pivotX;	// ピボット分オフセット
 			world._42 += sp->posY + sp->pivotY;
-            float posv[] = 
+            D3DXVECTOR4 posvec_tmp[4] = 
             {
-                {0.0f,0.0f,0.0f,1.0f}
-                {1.0f,0.0f,0.0f,1.0f}
-                {0.0f,1.0f,0.0f,1.0f}
-                {1.0f,1.0f,0.0f,1.0f}
+                D3DXVECTOR4(0.0f,0.0f,0.0f,0.0f),
+                D3DXVECTOR4(1.0f,0.0f,0.0f,0.0f),
+                D3DXVECTOR4(0.0f,1.0f,0.0f,0.0f),
+                D3DXVECTOR4(1.0f,1.0f,0.0f,0.0f),
             };
-
+            D3DXVECTOR4 pos_to_shader[4];
+            D3DXVec4TransformArray(pos_to_shader,sizeof(D3DXVECTOR4),
+                posvec_tmp,sizeof(D3DXVECTOR4),&world,4);
+            float uv_tmp[][2]={{0.0f,0.0f},{1.0f,0.0f},{0.0f,1.0f},{1.0f,1.0f}};
+           for(int i=0;i<4;++i)
+           {
+               uv_tmp[i][0] = uv_tmp[i][0]*sp->uvW+sp->uvLeft;
+               uv_tmp[i][0] = uv_tmp[i][1]*sp->uvH+sp->uvTop;
+           }
 
 			effect->SetMatrix( "proj", &proj );
             effect->SetTexture( "tex", sp->tex.GetPtr() );
