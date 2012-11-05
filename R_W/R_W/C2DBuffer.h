@@ -11,8 +11,8 @@ class C2DBuffer
     static IDirect3DVertexDeclaration9 *decl;	// 共通頂点宣言
     static ID3DXEffect *effect;					// 共通エフェクト
     static int scW, scH;			// スクリーンサイズ
+    static tComPtr< IDirect3DTexture9> tex;		// テクスチャ
 
-    tComPtr< IDirect3DTexture9> tex;		// テクスチャ
     int polyW, polyH;		// 板ポリゴンサイズ
     float pivotX, pivotY;	// ピボット座標
     float posX, posY, posZ;	// 位置
@@ -44,7 +44,7 @@ public:
     void setSize( int w, int h );
 
     // スクリーンサイズ指定
-    void setScreenSize( int w, int h );
+    static void setScreenSize( int w, int h );
 
     // ピボット指定
     void setPivot( float x, float y );
@@ -60,7 +60,7 @@ public:
     void getScale( float *sx, float *sy );
 
     // テクスチャ設定
-    void setTexture( tComPtr<IDirect3DTexture9> tex, bool isResize );
+    static void setTexture( tComPtr<IDirect3DTexture9> tex, bool isResize );
 
     // UV切り取り指定
     void setUV( float l, float t, float w, float h );

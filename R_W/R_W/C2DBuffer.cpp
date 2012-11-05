@@ -6,11 +6,11 @@
 	std::list<C2DBuffer*> C2DBuffer::drawObjectList;
 	IDirect3DVertexDeclaration9 *C2DBuffer::decl;
 	ID3DXEffect *C2DBuffer::effect;
+    tComPtr< IDirect3DTexture9> C2DBuffer::tex;
     int C2DBuffer::scH = 600;
     int C2DBuffer::scW = 800;
 
 	C2DBuffer::C2DBuffer( int screenWidth, int screenHeight ) :
-		tex(),
 		polyW(128), polyH(128),
 		pivotX(), pivotY(),
 		posX(), posY(), posZ(),
@@ -25,7 +25,6 @@
 	}
 
 	C2DBuffer::C2DBuffer() :
-		tex(),
 		polyW(128), polyH(128),
 		pivotX(), pivotY(),
 		posX(), posY(), posZ(),
@@ -74,7 +73,7 @@
 		// シェーダ作成
 		if (effect == 0) {
 			ID3DXBuffer *error = 0;
-			if ( FAILED( D3DXCreateEffectFromFile( dev, L"Shader\\sample.fx", 0, 0, 0, 0, &effect, &error) ) ) {
+			if ( FAILED( D3DXCreateEffectFromFile( dev, L"Shader\\buffer.fx", 0, 0, 0, 0, &effect, &error) ) ) {
 				OutputDebugStringA( (const char*)error->GetBufferPointer());
 				return;
 			}
@@ -159,14 +158,14 @@
 	}
 
 	// テクスチャ設定
-	void C2DBuffer::setTexture( tComPtr<IDirect3DTexture9> tex, bool isResize ) {
+	void C2DBuffer::setTexture( tComPtr<IDirect3DTexture9> tex_in, bool isResize ) {
 
-        this->tex = tex;
-		if (isResize == true) {
-			D3DSURFACE_DESC desc;
-            tex.GetPtr()->GetLevelDesc( 0, &desc );
-			setSize( desc.Width, desc.Height );
-		}
+        tex = tex_in;
+		//if (isResize == true) {
+		//	D3DSURFACE_DESC desc;
+  //          tex.GetPtr()->GetLevelDesc( 0, &desc );
+		//	setSize( desc.Width, desc.Height );
+		//}
 	}
 
 	// UV切り取り指定
@@ -239,6 +238,10 @@
 		effect->SetTechnique( "Tech" );
 		effect->Begin(&numPass, 0);
 		effect->BeginPass(0);
+    	effect->SetMatrix( "proj", &proj );
+        effect->SetTexture( "tex", C2DBuffer::tex.GetPtr());
+    	effect->CommitChanges();
+
 
 		// 描画リストに登録されているスプライトを一気に描画する
 		std::list<C2DBuffer*>::iterator it = drawObjectList.begin();
@@ -246,7 +249,6 @@
 			C2DBuffer* sp = (*it);
 			if (sp->bActivity == false)
 				continue;
-
 			D3DXMATRIX world, scale, rot;
 			D3DXMatrixScaling( &world, (float)sp->polyW, (float)sp->polyH, 1.0f );	// ポリゴンサイズに
 			D3DXMatrixScaling( &scale, sp->scaleX, sp->scaleY, 1.0f );	// ローカルスケール
@@ -270,18 +272,16 @@
            for(int i=0;i<4;++i)
            {
                uv_tmp[i][0] = uv_tmp[i][0]*sp->uvW+sp->uvLeft;
-               uv_tmp[i][0] = uv_tmp[i][1]*sp->uvH+sp->uvTop;
+               uv_tmp[i][1] = uv_tmp[i][1]*sp->uvH+sp->uvTop;
            }
 
-			effect->SetMatrix( "proj", &proj );
-            effect->SetTexture( "tex", sp->tex.GetPtr() );
-			effect->SetFloat( "uv_left"  , sp->uvLeft );
-			effect->SetFloat( "uv_top"   , sp->uvTop );
-			effect->SetFloat( "uv_width" , sp->uvW );
-			effect->SetFloat( "uv_height", sp->uvH );
 			effect->SetFloat( "alpha"    , sp->alpha );
-			effect->CommitChanges();
-			dev->DrawPrimitive( D3DPT_TRIANGLESTRIP, 0, 2 );
+            float vbuff_tmp[][5]={
+                {pos_to_shader[0].x,pos_to_shader[0].y,pos_to_shader[0].z,uv_tmp[0][0],uv_tmp[0][1]},
+                {pos_to_shader[1].x,pos_to_shader[1].y,pos_to_shader[1].z,uv_tmp[1][0],uv_tmp[1][1]},
+                {pos_to_shader[2].x,pos_to_shader[2].y,pos_to_shader[2].z,uv_tmp[2][0],uv_tmp[2][1]},
+                {pos_to_shader[3].x,pos_to_shader[3].y,pos_to_shader[3].z,uv_tmp[3][0],uv_tmp[3][1]}};
+			dev->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP,2,(void*)vbuff_tmp,sizeof(float)*5);
 		}
 
 		effect->EndPass();
