@@ -28,13 +28,12 @@ class C2DBuffer
 
 public:
     C2DBuffer();
-    C2DBuffer( int screenWidth, int screenHeight );
     C2DBuffer( const C2DBuffer &r );
     ~C2DBuffer();
 
     C2DBuffer &operator =( const C2DBuffer &r ) { copy(r); return *this; }
 
-    // 共通頂点バッファ作成
+    //effect等作成
     static void begin_first( IDirect3DDevice9* dev );
 
     // 後片付け

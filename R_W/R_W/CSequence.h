@@ -1,5 +1,6 @@
 #pragma once
 #include "C2DSprite.h"
+#include "C2DBuffer.h"
 const int NUMsubSP = 1000;//682;
 
 class CSequence
@@ -11,7 +12,7 @@ public:
     void Init();
 protected:
     C2DSprite mainSP;
-    C2DSprite subSP[NUMsubSP];
+    C2DBuffer subSP[NUMsubSP];
     C2DSprite Ore;
     bool subSPFlg[NUMsubSP];
 

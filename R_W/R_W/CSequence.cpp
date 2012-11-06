@@ -10,6 +10,7 @@ float SinTable2[360];
 float CosTable2[360];
 void CSequence::Init()
 {
+    C2DBuffer::begin_first(CDirectXDevice::GetDxDevice().GetDevice());
     float mainx=CMainWindow::GetMainWindow().GetWindowcWidth()/2,
         mainy=CMainWindow::GetMainWindow().GetWindowcHeight()/4;
     float mainu,mainv;
@@ -81,8 +82,8 @@ void CSequence::func1()
         }
     }
     float vec = 8.0f;
-    HANDLE thread = (HANDLE)_beginthreadex(NULL,0,func3,&subSP[NUMsubSP/2],0,NULL);
-    for(int i=0;i<NUMsubSP/2;++i)
+//   HANDLE thread = (HANDLE)_beginthreadex(NULL,0,func3,subSP,0,NULL);
+    for(int i=0;i<NUMsubSP;++i)
     {
         if(!subSP[i].getActivity())
             continue;
@@ -90,17 +91,14 @@ void CSequence::func1()
         subSP[i].getPos(&posX,&posY);
         subSP[i].setPos(posX+CosTable[i]*vec,posY+vec*SinTable[i]);
         subSP[i].getPos(&posX,&posY);
-        subSP[i].draw();
         if(posX < 0 || posX > 800)
             subSP[i].setActivity(false);
         if(posY < 0 || posY > 600)
             subSP[i].setActivity(false);
 
     }
-    WaitForSingleObject(thread,INFINITE);
-    for(int i=NUMsubSP/2;i<NUMsubSP;++i)
-        subSP[i].draw();
-    CloseHandle(thread);
+    //WaitForSingleObject(thread,INFINITE);
+    //CloseHandle(thread);
 }
 
 void CSequence::func2()
@@ -129,14 +127,13 @@ unsigned __stdcall func3(void* ptr)
 {
     C2DSprite* data = (C2DSprite*)ptr;
     float vec = 8.0f;
-    int offset = NUMsubSP/2;
-     for(int i=0;i<NUMsubSP/2;++i)
+     for(int i=0;i<NUMsubSP;++i)
     {
         if(!data[i].getActivity())
             continue;
         float posX,posY;
         data[i].getPos(&posX,&posY);
-        data[i].setPos(posX+CosTable[i+offset]*vec,posY+vec*SinTable[i+offset]);
+        data[i].setPos(posX+CosTable[i]*vec,posY+vec*SinTable[i]);
         data[i].getPos(&posX,&posY);
         if(posX < 0 || posX > 800)
             data[i].setActivity(false);

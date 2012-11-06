@@ -10,20 +10,6 @@
     int C2DBuffer::scH = 600;
     int C2DBuffer::scW = 800;
 
-	C2DBuffer::C2DBuffer( int screenWidth, int screenHeight ) :
-		polyW(128), polyH(128),
-		pivotX(), pivotY(),
-		posX(), posY(), posZ(),
-		rad(),
-		scaleX(1.0f), scaleY(1.0f),
-		uvLeft(), uvTop(),
-		uvW(1.0f), uvH(1.0f),
-		alpha(1.0f),
-		bActivity(true)
-	{
-		setScreenSize( screenWidth, screenHeight );
-	}
-
 	C2DBuffer::C2DBuffer() :
 		polyW(128), polyH(128),
 		pivotX(), pivotY(),
@@ -35,7 +21,6 @@
 		alpha(1.0f),
 		bActivity(true)
 	{
-		setScreenSize( 640, 480 );
 	}
 
 	C2DBuffer::C2DBuffer( const C2DBuffer &r ) {
@@ -73,7 +58,7 @@
 		// シェーダ作成
 		if (effect == 0) {
 			ID3DXBuffer *error = 0;
-			if ( FAILED( D3DXCreateEffectFromFile( dev, L"Shader\\buffer.fx", 0, 0, 0, 0, &effect, &error) ) ) {
+			if ( FAILED( D3DXCreateEffectFromFile( dev, L"buffer.fx", 0, 0, 0, 0, &effect, &error) ) ) {
 				OutputDebugStringA( (const char*)error->GetBufferPointer());
 				return;
 			}
@@ -225,7 +210,6 @@
 
 		// 頂点バッファ・頂点宣言設定
 		dev->SetVertexDeclaration( decl );
-
 		// 2D描画用射影変換行列
 		D3DXMATRIX proj;
 		D3DXMatrixIdentity( &proj );
@@ -238,10 +222,8 @@
 		effect->SetTechnique( "Tech" );
 		effect->Begin(&numPass, 0);
 		effect->BeginPass(0);
-    	effect->SetMatrix( "proj", &proj );
+        effect->SetMatrix( "proj", &proj );
         effect->SetTexture( "tex", C2DBuffer::tex.GetPtr());
-    	effect->CommitChanges();
-
 
 		// 描画リストに登録されているスプライトを一気に描画する
 		std::list<C2DBuffer*>::iterator it = drawObjectList.begin();
@@ -260,28 +242,28 @@
 			world._42 += sp->posY + sp->pivotY;
             D3DXVECTOR4 posvec_tmp[4] = 
             {
-                D3DXVECTOR4(0.0f,0.0f,0.0f,0.0f),
-                D3DXVECTOR4(1.0f,0.0f,0.0f,0.0f),
-                D3DXVECTOR4(0.0f,1.0f,0.0f,0.0f),
-                D3DXVECTOR4(1.0f,1.0f,0.0f,0.0f),
+                D3DXVECTOR4(0.0f,0.0f,0.0f,1.0f),
+                D3DXVECTOR4(1.0f,0.0f,0.0f,1.0f),
+                D3DXVECTOR4(0.0f,1.0f,0.0f,1.0f),
+                D3DXVECTOR4(1.0f,1.0f,0.0f,1.0f),
             };
             D3DXVECTOR4 pos_to_shader[4];
-            D3DXVec4TransformArray(pos_to_shader,sizeof(D3DXVECTOR4),
-                posvec_tmp,sizeof(D3DXVECTOR4),&world,4);
+            for(int i=0;i<4;++i)
+            D3DXVec4Transform(&pos_to_shader[i],&posvec_tmp[i],&world);
             float uv_tmp[][2]={{0.0f,0.0f},{1.0f,0.0f},{0.0f,1.0f},{1.0f,1.0f}};
            for(int i=0;i<4;++i)
            {
                uv_tmp[i][0] = uv_tmp[i][0]*sp->uvW+sp->uvLeft;
                uv_tmp[i][1] = uv_tmp[i][1]*sp->uvH+sp->uvTop;
            }
-
 			effect->SetFloat( "alpha"    , sp->alpha );
-            float vbuff_tmp[][5]={
-                {pos_to_shader[0].x,pos_to_shader[0].y,pos_to_shader[0].z,uv_tmp[0][0],uv_tmp[0][1]},
-                {pos_to_shader[1].x,pos_to_shader[1].y,pos_to_shader[1].z,uv_tmp[1][0],uv_tmp[1][1]},
-                {pos_to_shader[2].x,pos_to_shader[2].y,pos_to_shader[2].z,uv_tmp[2][0],uv_tmp[2][1]},
-                {pos_to_shader[3].x,pos_to_shader[3].y,pos_to_shader[3].z,uv_tmp[3][0],uv_tmp[3][1]}};
-			dev->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP,2,(void*)vbuff_tmp,sizeof(float)*5);
+            float vbuff_tmp[]={
+                pos_to_shader[0].x,pos_to_shader[0].y,pos_to_shader[0].z,uv_tmp[0][0],uv_tmp[0][1],
+                pos_to_shader[1].x,pos_to_shader[1].y,pos_to_shader[1].z,uv_tmp[1][0],uv_tmp[1][1],
+                pos_to_shader[2].x,pos_to_shader[2].y,pos_to_shader[2].z,uv_tmp[2][0],uv_tmp[2][1],
+                pos_to_shader[3].x,pos_to_shader[3].y,pos_to_shader[3].z,uv_tmp[3][0],uv_tmp[3][1]};
+            effect->CommitChanges();
+			dev->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP,2,vbuff_tmp,sizeof(float)*5);
 		}
 
 		effect->EndPass();

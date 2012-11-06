@@ -286,6 +286,8 @@
 			effect->SetFloat( "alpha"    , sp->alpha );
 			effect->CommitChanges();
 			dev->DrawPrimitive( D3DPT_TRIANGLESTRIP, 0, 2 );
+            //dev->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP,2,buff,sizeof(float)*5 );
+
 		}
 
 		effect->EndPass();

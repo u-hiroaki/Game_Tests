@@ -43,8 +43,10 @@ VOID CMainWindow::AppLoop()
 {
         m_sequence.Update(frame);
     CDirectXDevice::GetDxDevice().Begin();
+    C2DBuffer::drawAll(CDirectXDevice::GetDxDevice().GetDevice());
     C2DSprite::drawAll(CDirectXDevice::GetDxDevice().GetDevice());
     C2DSprite::clearDrawList();
+        C2DBuffer::clearDrawList();
     CDirectXDevice::GetDxDevice().End();
     frame = false;
     g_button.push[0]=false;
@@ -56,6 +58,7 @@ VOID CMainWindow::AppLoop()
 HRESULT CMainWindow::Release()
 {
     C2DSprite::end_last();
+    C2DBuffer::end_last();
 	return S_OK;
 }
 
