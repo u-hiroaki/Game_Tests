@@ -1,6 +1,7 @@
 #pragma once
 #include <d3d9.h>
 #include <list>
+#include <vector>
 #include <d3dx9.h>
 #include "DXTemplateUtility.h"
 
@@ -8,6 +9,7 @@ class C2DBuffer
 {
     static IDirect3DVertexBuffer9* vBuff;
     static std::list<C2DBuffer*> drawObjectList;		// 描画対象リスト
+    static std::vector<float>      drawBuffer;
     static IDirect3DVertexDeclaration9 *decl;	// 共通頂点宣言
     static ID3DXEffect *effect;					// 共通エフェクト
     static int scW, scH;			// スクリーンサイズ

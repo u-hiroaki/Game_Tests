@@ -8,6 +8,7 @@ float SinTable[NUMsubSP];
 float CosTable[NUMsubSP];
 float SinTable2[360];
 float CosTable2[360];
+
 void CSequence::Init()
 {
     C2DBuffer::begin_first(CDirectXDevice::GetDxDevice().GetDevice());
@@ -30,6 +31,7 @@ void CSequence::Init()
     L"Data/Chara.png",tex3.GetPPtr());    
     mainSP.setTexture(tex,true);
     mainSP.setPos(mainx-64,mainy-64);
+    #pragma omp parallel for
     for(int i = 0;i<NUMsubSP;++i)
     {
         int deg= 0;
@@ -82,7 +84,8 @@ void CSequence::func1()
         }
     }
     float vec = 8.0f;
-//   HANDLE thread = (HANDLE)_beginthreadex(NULL,0,func3,subSP,0,NULL);
+    //HANDLE thread = (HANDLE)_beginthreadex(NULL,0,func3,&(subSP[NUMsubSP/2]),0,NULL);
+#pragma omp parallel for
     for(int i=0;i<NUMsubSP;++i)
     {
         if(!subSP[i].getActivity())
@@ -95,10 +98,17 @@ void CSequence::func1()
             subSP[i].setActivity(false);
         if(posY < 0 || posY > 600)
             subSP[i].setActivity(false);
-
     }
-    //WaitForSingleObject(thread,INFINITE);
+    //DWORD ret=0;
+    //ret=WaitForSingleObject(thread,INFINITE);
     //CloseHandle(thread);
+    //if(count == NUMsubSP)
+    //{
+    //    for(int i=0;i<NUMsubSP/4;++i)
+    //        if(subSP[i].getActivity())
+    //            return;
+    //    count=0;
+    //}
 }
 
 void CSequence::func2()
@@ -127,7 +137,7 @@ unsigned __stdcall func3(void* ptr)
 {
     C2DSprite* data = (C2DSprite*)ptr;
     float vec = 8.0f;
-     for(int i=0;i<NUMsubSP;++i)
+     for(int i=0;i<NUMsubSP/2;++i)
     {
         if(!data[i].getActivity())
             continue;

@@ -4,6 +4,7 @@
 #pragma comment(lib, "d3dx9.lib")
 
 	std::list<C2DBuffer*> C2DBuffer::drawObjectList;
+    std::vector<float>      C2DBuffer::drawBuffer;
 	IDirect3DVertexDeclaration9 *C2DBuffer::decl;
 	ID3DXEffect *C2DBuffer::effect;
     tComPtr< IDirect3DTexture9> C2DBuffer::tex;
@@ -73,6 +74,7 @@
 			};
 			dev->CreateVertexDeclaration( elems, &decl );
 		}
+        drawBuffer.reserve(6*5*1000);
 	}
 
 	// 後片付け
@@ -198,6 +200,10 @@
 		return posZ;
 	}
 
+    bool isActiveSP(C2DBuffer* buf)
+    {
+        return !buf->getActivity();
+    }
 	// 描画リストに積む
 	void C2DBuffer::draw() {
 		drawObjectList.push_back( this );
@@ -207,7 +213,9 @@
 	void C2DBuffer::drawAll( IDirect3DDevice9 *dev ) {
 		if (effect == 0 || decl == 0)
 			return;	// 描画不可
-
+        C2DBuffer::drawObjectList.remove_if(isActiveSP);
+        if(drawObjectList.empty())
+            return;
 		// 頂点バッファ・頂点宣言設定
 		dev->SetVertexDeclaration( decl );
 		// 2D描画用射影変換行列
@@ -240,32 +248,39 @@
 			world = world * scale * rot;
 			world._41 += sp->posX + sp->pivotX;	// ピボット分オフセット
 			world._42 += sp->posY + sp->pivotY;
-            D3DXVECTOR4 posvec_tmp[4] = 
+            D3DXVECTOR4 posvec_tmp[] = 
             {
                 D3DXVECTOR4(0.0f,0.0f,0.0f,1.0f),
                 D3DXVECTOR4(1.0f,0.0f,0.0f,1.0f),
                 D3DXVECTOR4(0.0f,1.0f,0.0f,1.0f),
-                D3DXVECTOR4(1.0f,1.0f,0.0f,1.0f),
+                D3DXVECTOR4(1.0f,1.0f,0.0f,1.0f), 
+                D3DXVECTOR4(0.0f,1.0f,0.0f,1.0f),
+                D3DXVECTOR4(1.0f,0.0f,0.0f,1.0f),
             };
-            D3DXVECTOR4 pos_to_shader[4];
-            for(int i=0;i<4;++i)
+            D3DXVECTOR4 pos_to_shader[6];
+            for(int i=0;i<6;++i)
             D3DXVec4Transform(&pos_to_shader[i],&posvec_tmp[i],&world);
-            float uv_tmp[][2]={{0.0f,0.0f},{1.0f,0.0f},{0.0f,1.0f},{1.0f,1.0f}};
-           for(int i=0;i<4;++i)
+            float uv_tmp[][2]={{0.0f,0.0f},{1.0f,0.0f},{0.0f,1.0f},{1.0f,1.0f},{0.0f,1.0f},{1.0f,0.0f}};
+           for(int i=0;i<6;++i)
            {
                uv_tmp[i][0] = uv_tmp[i][0]*sp->uvW+sp->uvLeft;
                uv_tmp[i][1] = uv_tmp[i][1]*sp->uvH+sp->uvTop;
            }
 			effect->SetFloat( "alpha"    , sp->alpha );
-            float vbuff_tmp[]={
-                pos_to_shader[0].x,pos_to_shader[0].y,pos_to_shader[0].z,uv_tmp[0][0],uv_tmp[0][1],
-                pos_to_shader[1].x,pos_to_shader[1].y,pos_to_shader[1].z,uv_tmp[1][0],uv_tmp[1][1],
-                pos_to_shader[2].x,pos_to_shader[2].y,pos_to_shader[2].z,uv_tmp[2][0],uv_tmp[2][1],
-                pos_to_shader[3].x,pos_to_shader[3].y,pos_to_shader[3].z,uv_tmp[3][0],uv_tmp[3][1]};
-            effect->CommitChanges();
-			dev->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP,2,vbuff_tmp,sizeof(float)*5);
+            for(int i=0;i<6;++i)
+            {drawBuffer.push_back(pos_to_shader[i].x);
+            drawBuffer.push_back(pos_to_shader[i].y);
+            drawBuffer.push_back(pos_to_shader[i].z);
+            drawBuffer.push_back(uv_tmp[i][0]);
+            drawBuffer.push_back(uv_tmp[i][1]);}
+            //float vbuff_tmp[]={
+            //    pos_to_shader[0].x,pos_to_shader[0].y,pos_to_shader[0].z,uv_tmp[0][0],uv_tmp[0][1],
+            //    pos_to_shader[1].x,pos_to_shader[1].y,pos_to_shader[1].z,uv_tmp[1][0],uv_tmp[1][1],
+            //    pos_to_shader[2].x,pos_to_shader[2].y,pos_to_shader[2].z,uv_tmp[2][0],uv_tmp[2][1],
+            //    pos_to_shader[3].x,pos_to_shader[3].y,pos_to_shader[3].z,uv_tmp[3][0],uv_tmp[3][1]};
 		}
-
+        effect->CommitChanges();
+        dev->DrawPrimitiveUP( D3DPT_TRIANGLELIST,drawBuffer.size()/15,&drawBuffer[0],sizeof(float)*5);
 		effect->EndPass();
 		effect->End();
 	}
@@ -273,4 +288,5 @@
 	// 描画リストクリア
 	void C2DBuffer::clearDrawList() {
 		drawObjectList.clear();
+        drawBuffer.clear();
 	}

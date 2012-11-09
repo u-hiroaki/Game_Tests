@@ -1,8 +1,8 @@
 #pragma once
 #include "C2DSprite.h"
 #include "C2DBuffer.h"
-const int NUMsubSP = 1000;//682;
-
+//const int NUMsubSP = 1500;//682;
+#define NUMsubSP  1500
 class CSequence
 {
 public:
