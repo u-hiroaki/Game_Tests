@@ -14,7 +14,7 @@ void CSequence::Init()
     C2DBuffer::begin_first(CDirectXDevice::GetDxDevice().GetDevice());
     float mainx=CMainWindow::GetMainWindow().GetWindowcWidth()/2,
         mainy=CMainWindow::GetMainWindow().GetWindowcHeight()/4;
-    float mainu,mainv;
+
     mainSP.setScreenSize(CMainWindow::GetMainWindow().GetWindowcWidth(),
         CMainWindow::GetMainWindow().GetWindowcHeight());
     tComPtr<IDirect3DTexture9> tex;
@@ -56,14 +56,12 @@ void CSequence::Init()
 
 void CSequence::Update(bool frame)
 {
-   if(1)
+   if(!frame)
 {    func2();
     func1();
     }
     mainSP.draw();
     Ore.draw();
-    for(int i=0;i<NUMsubSP;++i)
-        subSP[i].draw();
 }
 
 void CSequence::func1()
@@ -83,10 +81,9 @@ void CSequence::func1()
             count++;
         }
     }
-    float vec = 8.0f;
-    //HANDLE thread = (HANDLE)_beginthreadex(NULL,0,func3,&(subSP[NUMsubSP/2]),0,NULL);
-#pragma omp parallel for
-    for(int i=0;i<NUMsubSP;++i)
+    float vec = 6.0f;
+    HANDLE hThread = (HANDLE)_beginthreadex(NULL,0,func3,subSP,0,NULL);
+    for(int i=0;i<NUMsubSP/2;++i)
     {
         if(!subSP[i].getActivity())
             continue;
@@ -98,17 +95,24 @@ void CSequence::func1()
             subSP[i].setActivity(false);
         if(posY < 0 || posY > 600)
             subSP[i].setActivity(false);
+		subSP[i].draw();
     }
     //DWORD ret=0;
-    //ret=WaitForSingleObject(thread,INFINITE);
-    //CloseHandle(thread);
-    //if(count == NUMsubSP)
-    //{
-    //    for(int i=0;i<NUMsubSP/4;++i)
-    //        if(subSP[i].getActivity())
-    //            return;
-    //    count=0;
-    //}
+    WaitForSingleObject(hThread,INFINITE);
+    CloseHandle(hThread);
+	    for(int i=NUMsubSP/2;i<NUMsubSP;++i)
+    {
+        if(!subSP[i].getActivity())
+            continue;
+		subSP[i].draw();
+		}
+    if(count == NUMsubSP)
+    {
+        for(int i=0;i<NUMsubSP/4;++i)
+            if(subSP[i].getActivity())
+                return;
+        count=0;
+    }
 }
 
 void CSequence::func2()
@@ -135,9 +139,9 @@ void SetRButton(HWND hwnd,LPARAM lparam){g_button.push[3] = true;};
 
 unsigned __stdcall func3(void* ptr)
 {
-    C2DSprite* data = (C2DSprite*)ptr;
-    float vec = 8.0f;
-     for(int i=0;i<NUMsubSP/2;++i)
+    C2DBuffer* data = (C2DBuffer*)ptr;
+    float vec = 6.0f;
+     for(int i=NUMsubSP/2;i<NUMsubSP;++i)
     {
         if(!data[i].getActivity())
             continue;

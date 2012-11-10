@@ -2,6 +2,7 @@
 #define ___CMAINWINDOW_2011_11_26___
 #include "WindowManager.h"
 #include "CSequence.h"
+#include "FPSCounter.h"
 ///メインウィンドウなのでシングルトン
 
 
@@ -19,11 +20,13 @@ static	CMainWindow& GetMainWindow()
 	HRESULT Release();
 private:
 	CMainWindow()
+		:m_fpsc()
     {ZeroMemory(&m_rect,sizeof(m_rect));};
     ~CMainWindow(){};
 	CMainWindow(CMainWindow& obj){};
 	void operator=(CMainWindow& obj){};
     CSequence   m_sequence;
+	CFPSCounter m_fpsc;
 protected:
     void HookKey(WPARAM,LPARAM);
     void ChangeScr2Window();

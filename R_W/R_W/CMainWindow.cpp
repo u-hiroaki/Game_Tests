@@ -41,7 +41,10 @@ HRESULT CMainWindow::MsgLoop()
 
 VOID CMainWindow::AppLoop()
 {
-        m_sequence.Update(frame);
+	
+	wchar_t title[32];
+	swprintf(title,L"%lf fps",m_fpsc.GetFPS());
+	m_sequence.Update(frame);
     CDirectXDevice::GetDxDevice().Begin();
     C2DBuffer::drawAll(CDirectXDevice::GetDxDevice().GetDevice());
     C2DSprite::drawAll(CDirectXDevice::GetDxDevice().GetDevice());
@@ -53,6 +56,7 @@ VOID CMainWindow::AppLoop()
         g_button.push[1]=false;
             g_button.push[2]=false;
                 g_button.push[3]=false;
+				this->SetWindowTitle(title);
 }
 
 HRESULT CMainWindow::Release()

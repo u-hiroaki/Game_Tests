@@ -59,7 +59,8 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <OpenMPSupport>true</OpenMPSupport>
+      <OpenMPSupport>
+      </OpenMPSupport>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -97,6 +98,7 @@
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="CMainWindow.cpp" />
     <ClCompile Include="CSequence.cpp" />
+    <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
@@ -107,11 +109,11 @@
     <ClInclude Include="CDebugConsole.h" />
     <ClInclude Include="CDirectXDevice.h" />
     <ClInclude Include="CEffect.h" />
-    <ClInclude Include="CFPSCounter.h" />
     <ClInclude Include="CMainWindow.h" />
     <ClInclude Include="CSequence.h" />
     <ClInclude Include="CState.h" />
     <ClInclude Include="DXTemplateUtility.h" />
+    <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="TemplateUtility.h" />
     <ClInclude Include="tRenderingObject.h" />
     <ClInclude Include="WindowManager.h" />

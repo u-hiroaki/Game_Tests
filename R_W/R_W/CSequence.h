@@ -2,7 +2,7 @@
 #include "C2DSprite.h"
 #include "C2DBuffer.h"
 //const int NUMsubSP = 1500;//682;
-#define NUMsubSP  1500
+#define NUMsubSP  1108
 class CSequence
 {
 public:
