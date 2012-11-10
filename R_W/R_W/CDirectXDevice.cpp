@@ -42,7 +42,7 @@ HRESULT CDirectXDevice::Initialize(const HWND in_hwnd,const BOOL in_windowmode,
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;
 	d3dpp.BackBufferHeight = in_wHeight;
 	d3dpp.BackBufferWidth = in_wWidth;
-	d3dpp.PresentationInterval=D3DPRESENT_INTERVAL_IMMEDIATE;
+	d3dpp.PresentationInterval=D3DPRESENT_INTERVAL_DEFAULT;
 	m_d3dpp = d3dpp;
     
     m_pd3d9->CreateDevice(D3DADAPTER_DEFAULT,DeviceType,in_hwnd,dwFlag,&m_d3dpp,&m_pd3ddev);

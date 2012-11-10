@@ -25,7 +25,7 @@ void CSequence::Init()
     L"Data/no_picture.jpg",tex.GetPPtr());
         D3DXCreateTextureFromFile(
     CDirectXDevice::GetDxDevice().GetDevice(),
-    L"Data/bullet.png",tex2.GetPPtr());
+    L"Data/bullet2.png",tex2.GetPPtr());
     D3DXCreateTextureFromFile(
     CDirectXDevice::GetDxDevice().GetDevice(),
     L"Data/Chara.png",tex3.GetPPtr());    
@@ -41,7 +41,7 @@ void CSequence::Init()
         subSP[i].setScreenSize(CMainWindow::GetMainWindow().GetWindowcWidth(),
         CMainWindow::GetMainWindow().GetWindowcHeight());
         subSP[i].setTexture(tex2,true);
-        subSP[i].setScale(0.2,0.2);
+        subSP[i].setSize(32,32);
         subSP[i].setActivity(false);
         SinTable[i] = sin(rad);
         CosTable[i] = cos(rad);
@@ -81,7 +81,7 @@ void CSequence::func1()
             count++;
         }
     }
-    float vec = 6.0f;
+    float vec = 3.0f;
     HANDLE hThread = (HANDLE)_beginthreadex(NULL,0,func3,subSP,0,NULL);
     for(int i=0;i<NUMsubSP/2;++i)
     {
@@ -140,7 +140,7 @@ void SetRButton(HWND hwnd,LPARAM lparam){g_button.push[3] = true;};
 unsigned __stdcall func3(void* ptr)
 {
     C2DBuffer* data = (C2DBuffer*)ptr;
-    float vec = 6.0f;
+    float vec = 3.0f;
      for(int i=NUMsubSP/2;i<NUMsubSP;++i)
     {
         if(!data[i].getActivity())

@@ -20,7 +20,7 @@ static	CMainWindow& GetMainWindow()
 	HRESULT Release();
 private:
 	CMainWindow()
-		:m_fpsc()
+		:m_fpsc(100)
     {ZeroMemory(&m_rect,sizeof(m_rect));};
     ~CMainWindow(){};
 	CMainWindow(CMainWindow& obj){};

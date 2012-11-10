@@ -94,7 +94,7 @@
     <None Include="Shader\sample.fx">
       <Filter>シェーダ</Filter>
     </None>
-    <None Include="buffer.fx">
+    <None Include="Shader\buffer.fx">
       <Filter>シェーダ</Filter>
     </None>
   </ItemGroup>

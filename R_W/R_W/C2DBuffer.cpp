@@ -59,7 +59,7 @@
 		// シェーダ作成
 		if (effect == 0) {
 			ID3DXBuffer *error = 0;
-			if ( FAILED( D3DXCreateEffectFromFile( dev, L"buffer.fx", 0, 0, 0, 0, &effect, &error) ) ) {
+			if ( FAILED( D3DXCreateEffectFromFile( dev, L"Shader/buffer.fx", 0, 0, 0, 0, &effect, &error) ) ) {
 				OutputDebugStringA( (const char*)error->GetBufferPointer());
 				return;
 			}
@@ -150,7 +150,7 @@
         tex = tex_in;
 		//if (isResize == true) {
 		//	D3DSURFACE_DESC desc;
-  //          tex.GetPtr()->GetLevelDesc( 0, &desc );
+  //           tex.GetPtr()->GetLevelDesc( 0, &desc );
 		//	setSize( desc.Width, desc.Height );
 		//}
 	}
