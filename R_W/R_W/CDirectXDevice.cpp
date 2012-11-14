@@ -45,7 +45,7 @@ HRESULT CDirectXDevice::Initialize(const HWND in_hwnd,const BOOL in_windowmode,
 	d3dpp.PresentationInterval=D3DPRESENT_INTERVAL_DEFAULT;
 	m_d3dpp = d3dpp;
     
-    m_pd3d9->CreateDevice(D3DADAPTER_DEFAULT,DeviceType,in_hwnd,dwFlag,&m_d3dpp,&m_pd3ddev);
+    m_pd3d9->CreateDevice(D3DADAPTER_DEFAULT,DeviceType,in_hwnd,dwFlag|D3DCREATE_MULTITHREADED,&m_d3dpp,&m_pd3ddev);
 //   	m_pd3ddev->Clear(0,0,D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER,D3DCOLOR_XRGB(243, 152, 0),1.0f,0);
     return S_OK;
 }

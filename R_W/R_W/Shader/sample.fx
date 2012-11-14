@@ -40,9 +40,6 @@ VS_OUT vs_main( VS_IN In ) {
 float4 ps_main(VS_OUT In) : COLOR0 {
     float4 color = tex2D( smp, In.uv );
     
-	if(In.uv.x > 0.2 && In.uv.x < 0.8)
-	 if(In.uv.y > 0.2 && In.uv.y < 0.8)
-	color= float4(1,0,0,1);
 	color.a *= alpha;
     return color;
 }

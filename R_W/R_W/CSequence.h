@@ -5,17 +5,23 @@
 #define NUMsubSP  2000
 class CSequence
 {
+    typedef void (CSequence::*upfunc)();
 public:
-    CSequence(){}
+    CSequence(){
+        funcptr = &CSequence::InnerInit;
+    }
     ~CSequence(){}
     void Update(bool frame);
+    void InnerUpdate();
     void Init();
+    void InnerInit();
 protected:
     C2DSprite mainSP;
     C2DBuffer subSP[NUMsubSP];
     C2DSprite Ore;
+    C2DSprite loading;
     bool subSPFlg[NUMsubSP];
-
+    upfunc  funcptr;
     void func1();
     void func2();
 };
@@ -29,3 +35,4 @@ void SetDButton(HWND hwnd,LPARAM lparam);
 void SetLButton(HWND hwnd,LPARAM lparam);
 void SetRButton(HWND hwnd,LPARAM lparam);
 unsigned __stdcall func3(void* );
+unsigned __stdcall func4(void* );
