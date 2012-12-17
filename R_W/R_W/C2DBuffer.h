@@ -5,6 +5,13 @@
 #include <d3dx9.h>
 #include "DXTemplateUtility.h"
 
+/*********************************************************
+大量に描画したい時用クラス
+弾幕とか
+エネミー祭りとか
+そんな感じ
+*********************************************************/
+
 class C2DBuffer
 {
     static IDirect3DVertexBuffer9* vBuff;

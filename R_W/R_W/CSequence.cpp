@@ -35,7 +35,7 @@ void CSequence::Init()
     for(int i = 0;i<NUMsubSP;++i)
     {
         int deg= 0;
-        deg = (i%36)*10;
+        deg = (i%36)*20;
         float rad = (float)deg * D3DX_PI/ 180;
 
         subSP[i].setScreenSize(CMainWindow::GetMainWindow().GetWindowcWidth(),
@@ -85,7 +85,7 @@ void CSequence::func1()
             count++;
         }
     }
-    float vec = 2.0f;
+    float vec = 0.25f;
     HANDLE hThread = (HANDLE)_beginthreadex(NULL,0,func3,subSP,0,NULL);
     for(int i=0;i<NUMsubSP/2;++i)
     {
@@ -152,7 +152,7 @@ void SetRButton(HWND hwnd,LPARAM lparam){g_button.push[3] = true;};
 unsigned __stdcall func3(void* ptr)
 {
     C2DBuffer* data = (C2DBuffer*)ptr;
-    float vec = 2.0f;
+    float vec = 0.25f;
      for(int i=NUMsubSP/2;i<NUMsubSP;++i)
     {
         if(!data[i].getActivity())

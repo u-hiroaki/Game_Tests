@@ -56,6 +56,8 @@
 	// 共通頂点バッファ作成
 	void C2DBuffer::begin_first( IDirect3DDevice9* dev ) {
 
+        if(vBuff == 0)
+            dev->CreateVertexBuffer(
 		// シェーダ作成
 		if (effect == 0) {
 			ID3DXBuffer *error = 0;
@@ -83,6 +85,8 @@
 			effect->Release();
 		if (decl)
 			decl->Release();
+        if(vBuff)
+            vBuff->Release();
 	}
 
 	// 板ポリサイズ指定
