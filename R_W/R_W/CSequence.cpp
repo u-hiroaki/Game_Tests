@@ -3,6 +3,8 @@
 #include"CMainWindow.h"
 #include <math.h>
 #include <process.h>
+#pragma warning(disable:4244)
+#pragma warning(disable:4305)
 button g_button;
 float SinTable[NUMsubSP];
 float CosTable[NUMsubSP];

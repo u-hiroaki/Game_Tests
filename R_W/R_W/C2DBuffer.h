@@ -21,6 +21,9 @@ class C2DBuffer
     static ID3DXEffect *effect;					// 共通エフェクト
     static int scW, scH;			// スクリーンサイズ
     static tComPtr< IDirect3DTexture9> tex;		// テクスチャ
+    
+    IDirect3DVertexBuffer9*         g_pVBBox;
+    IDirect3DIndexBuffer9*          g_pIBBox;
 
     int polyW, polyH;		// 板ポリゴンサイズ
     float pivotX, pivotY;	// ピボット座標

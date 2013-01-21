@@ -8,6 +8,7 @@
 	IDirect3DVertexDeclaration9 *C2DBuffer::decl;
 	ID3DXEffect *C2DBuffer::effect;
     tComPtr< IDirect3DTexture9> C2DBuffer::tex;
+    IDirect3DVertexBuffer9* C2DBuffer::vBuff=NULL;
     int C2DBuffer::scH = 600;
     int C2DBuffer::scW = 800;
 
@@ -57,7 +58,7 @@
 	void C2DBuffer::begin_first( IDirect3DDevice9* dev ) {
 
         if(vBuff == 0)
-            dev->CreateVertexBuffer(
+            dev->CreateVertexBuffer()
 		// シェーダ作成
 		if (effect == 0) {
 			ID3DXBuffer *error = 0;
